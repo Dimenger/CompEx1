@@ -5,6 +5,7 @@ function App() {
   const [value, setValue] = useState("");
   const [list, setList] = useState();
   const [error, setError] = useState("");
+  const [isValueVaild, setIsValueVaild] = useState(false);
 
   const onInputButtonClick = () => {
     const promptValue = prompt("Введите новое значение");
@@ -14,6 +15,7 @@ function App() {
     } else {
       setValue(promptValue);
       setError("");
+      setIsValueVaild(true);
     }
   };
 
@@ -30,7 +32,7 @@ function App() {
           <button onClick={onInputButtonClick} className={styles.button}>
             Ввести новое
           </button>
-          <button className={styles.button} disabled>
+          <button className={styles.button} disabled={!isValueVaild}>
             Добавить в список
           </button>
         </div>
