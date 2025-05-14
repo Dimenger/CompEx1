@@ -19,8 +19,20 @@ function App() {
     }
   };
 
+  const getDate = () => {
+    const currentDate = new Date();
+    return currentDate.toLocaleDateString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   const onAddButtonClick = () => {
-    setList([...list, { id: Date.now(), value }]);
+    setList([...list, { id: Date.now(), value, date: getDate() }]);
     setValue("");
     setError("");
     setIsValueVaild(false);
@@ -57,7 +69,7 @@ function App() {
             <ul className={styles.list}>
               {list.map((item) => (
                 <li key={item.id} className={styles["list-item"]}>
-                  {item.value}
+                  {item.value} - {item.date}
                 </li>
               ))}
             </ul>
