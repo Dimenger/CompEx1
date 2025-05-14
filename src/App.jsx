@@ -1,19 +1,35 @@
+import { useState } from "react";
 import styles from "./App.module.css";
 
 function App() {
+  const [value, setValue] = useState("");
+  const [list, setList] = useState();
+  const [error, setError] = useState("");
+
+  const onInputButtonClick = () => {
+    const promptValue = prompt("Введите новое значение");
+
+    if (!promptValue || promptValue.length < 3) {
+      setError("Введённая строка должна содержать минимум 3 символа");
+    } else {
+      setValue(promptValue);
+      setError("");
+    }
+  };
+
   return (
     <>
       <div className={styles.app}>
         <h1 className={styles["page-heading"]}>Ввод значения</h1>
         <p className={styles["no-margin-text"]}>
           Текущее значение <code>value</code>: "
-          <output className={styles["current-value"]}></output>"
+          <output className={styles["current-value"]}>{value}</output>"
         </p>
-        <div className={styles.error}>
-          Введенное значение должно содержать минимум 3 символа
-        </div>
+        {error && <div className={styles.error}>{error}</div>}
         <div className={styles["buttons-container"]}>
-          <button className={styles.button}>Ввести новое</button>
+          <button onClick={onInputButtonClick} className={styles.button}>
+            Ввести новое
+          </button>
           <button className={styles.button} disabled>
             Добавить в список
           </button>
