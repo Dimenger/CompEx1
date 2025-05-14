@@ -3,7 +3,7 @@ import styles from "./App.module.css";
 
 function App() {
   const [value, setValue] = useState("");
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
   const [error, setError] = useState("");
   const [isValueVaild, setIsValueVaild] = useState(false);
 
@@ -19,6 +19,13 @@ function App() {
     }
   };
 
+  const onAddButtonClick = () => {
+    setList([...list, { id: Date.now(), value }]);
+    setValue("");
+    setError("");
+    setIsValueVaild(false);
+  };
+
   return (
     <>
       <div className={styles.app}>
@@ -32,16 +39,29 @@ function App() {
           <button onClick={onInputButtonClick} className={styles.button}>
             Ввести новое
           </button>
-          <button className={styles.button} disabled={!isValueVaild}>
+          <button
+            onClick={onAddButtonClick}
+            className={styles.button}
+            disabled={!isValueVaild}
+          >
             Добавить в список
           </button>
         </div>
         <div className={styles["list-container"]}>
           <h2 className={styles["list-heading"]}>Список:</h2>
-          <p className={styles["no-margin-text"]}>Нет добавленных элементов</p>
-          <ul className={styles.list}>
-            <li className={styles["list-item"]}>Первый элемент</li>
-          </ul>
+          {list.length === 0 ? (
+            <p className={styles["no-margin-text"]}>
+              Нет добавленных элементов
+            </p>
+          ) : (
+            <ul className={styles.list}>
+              {list.map((item) => (
+                <li key={item.id} className={styles["list-item"]}>
+                  {item.value}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </>
